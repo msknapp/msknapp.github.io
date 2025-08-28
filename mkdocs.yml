@@ -1,0 +1,24 @@
+site_name: Mike Knapp's Homepage
+nav:
+  - Home: index.md
+  - Cloud: cloud.md
+  - Command Line: commandline.md
+  - Containers: containers.md
+  - Algorithms: algorithms.md
+  - CICD: cicd.md
+  - Data: data.md
+  - Documentation: documentation.md
+  - Formats: formats.md 
+  - Grammar: grammar.md
+  - Infrastructure as Code: iac.md
+  - IDE: ide.md
+  - Machine Learning: machinelearning.md
+  - Monitoring: monitoring.md
+  - Networking: networking.md
+  - Operating System: operatingsystem.md
+  - Principles: principles.md
+  - Programming: programmng.md
+  - Security: security.md
+  - Streaming: streaming.md
+  - Web: web.md
+theme: readthedocs
