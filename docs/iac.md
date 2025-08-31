@@ -1,20 +1,11 @@
----
-title: 
-weight: 10
-description: 
-summary: 
-lastmod: 2025-08-13
-date: 2025-08-13
-tags: []
-categories: []
-series: []
-keywords: []
----
 
 # Infrastructure as Code
 
-IaC automates the creation and initialization of many services in a cluster or system.  It runs once and maintains a state of the system.  Kubernetes and other platforms are more reactive though.  They constantly monitor things and can correct the state in various scenarios.  Like if a container or node crashes, if traffic goes way up or down, if a disk runs out, etc.  it can react and make the needed changes.
-
+IaC automates the creation and initialization of many services in a cluster or system. 
+It runs once and maintains a state of the system.  Kubernetes and other platforms are more reactive though.  
+They constantly monitor things and can correct the state in various scenarios.  
+Like if a container or node crashes, if traffic goes way up or down, if a disk runs out, etc.  
+it can react and make the needed changes.
 
 ## Terraform:
 
@@ -26,11 +17,12 @@ IaC automates the creation and initialization of many services in a cluster or s
 - Order of resources in files does not matter, it discovers relationships and dependencies.
 - Is a declarative language, you can have multiple files in one configuration.
 - Basic syntax: `<block type> <label> [<more labels>...] { key = value … }`
-- The block type “resource” defines infrastructure, and the main purpose of terraform is to define these resources.  Other block types just exist to - make that easier.
+- The block type “resource” defines infrastructure, and the main purpose of terraform is to define these resources.  
+  Other block types just exist to make that easier.
 - Values can be expressions, referring to other things.
 - Block labels should be quoted, there can be multiple.
-- terraform init: downloads providers.  Produces .terraform.lock.hcl, keep in gh.
-- terraform plan: decides what changes need to be made.
+- **terraform init:** downloads providers.  Produces .terraform.lock.hcl, keep in gh.
+- **terraform plan:** decides what changes need to be made.
 - Other commands: validate, fmt, 
 - terraform apply: executes the plan.
 - For a resource definition, the first label is the type, the second is its name.  

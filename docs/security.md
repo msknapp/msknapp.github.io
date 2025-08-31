@@ -1,21 +1,24 @@
----
-title: 
-weight: 10
-description: 
-summary: 
-lastmod: 2025-08-13
-date: 2025-08-13
-tags: []
-categories: []
-series: []
-keywords: []
----
+
+# Security
 
 Zeppelin, Authzed, google whitepapers,
 
-Oauth2
+## Oauth2
 
-# LDAP, Active Directory
+## LDAP, Active Directory
 
 Vault
 TLS, certificates, openssl
+
+## Linux Security
+
+These control what a user or process is allowed to access or do (files, ports, sockets, privilege escalation, etc.).
+Kubernetes is capable of supporting both apparmor and selinux.
+
+### AppArmor
+
+Simpler, based on paths and types.
+
+### SELinux
+
+Security enhanced Linux.  More complex but more secure.  Tougher to learn.  built into the Kernel.  

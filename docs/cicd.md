@@ -1,18 +1,19 @@
 
----
-title: 
-weight: 10
-description: 
-summary: 
-lastmod: 2025-08-13
-date: 2025-08-13
-tags: []
-categories: []
-series: []
-keywords: []
----
 
-# Github Workflows
+# CICD
+
+- Encourages frequent code commits.
+- **Continuous integration:** As soon as code is pushed, it is checked for compilation issues, 
+  and unit tests are run, to ensure it works.  May review code and perform quality analysis 
+  like with Sonar, PMD, linters, etc.  Artifacts may be built, like JAR files, executables, etc.
+- **Continuous Development:** Deploys to a non-production environment.  Ensures that code can be deployed and is safe to deploy. 
+  May run integration tests, load tests, etc.  Sometimes if this is successful, code is automatically merged.
+- **Continuous Deployment:** Automates deployment to production.  More risky, so many companies don’t allow it,
+  they prefer manual prod deployments.  Usually requires a plan for easy rollback.
+- **Jenkins:** Java, Groovy based.  Open Source
+- Github workflows
+
+## Github Workflows
 
 - Workflows may be triggered by events.  They are composed of jobs.  Each job runs in parallel by default, but you can 
   add dependencies between them.  - A job runs entirely on a single runner (e.g. a virtual machine or a container).  
@@ -67,7 +68,11 @@ keywords: []
   The vars context holds variables defined outside the workflow like in the org or repository.  
   The env can hold values set in your workflow.
 
-# Twelve factor apps
+## Argo Workflows
+
+TODO
+
+## Twelve factor apps
 
 - Code must be in version control, like github.  There should be one repository per app.  Implies that monorepos are not desirable.
 - Dependencies: Refers to code libraries that your app uses.  They are explicitly declared and isolated from the rest of 
@@ -82,23 +87,13 @@ keywords: []
 - Don’t distinguish between local and external resources, treat them all as attached resources, only connect with them by address.  
   You should not need to change code if a resource becomes local or external.
 - Build, release, and run stages must be strictly separated.
-- The app should be stateless and share nothing.  Don’t assume that anything cached in its memory will be available in future requests.  Don’t use - sticky sessions.
+- The app should be stateless and share nothing.  Don’t assume that anything cached in its memory will be available in 
+  future requests.  Don’t use - sticky sessions.
 - Produce entirely self contained apps, they should not depend on a separate webserver like Tomcat.  
   The application should host its own web server and bind to a port.  It can run jetty for Java, or chi for Golang.
 - Scale out by having more processes, not by having more resources in one process, not by having a process do more things.
-- Processes are disposable.  They should be able to start up fast, within a few seconds.  They should handle graceful shutdowns, cleaning up things - when it receives an interrupt signal, and stopping all future request handling.
+- Processes are disposable.  They should be able to start up fast, within a few seconds.  
+  They should handle graceful shutdowns, cleaning up things when it receives an interrupt signal, and stopping all 
+  future request handling.
 - Keep your environments as similar as possible.
 - Logs should be written to standard output, and thought of as event streams.  Apps should not be managing log files, rotating them, compressing them, etc.
-
-# CICD
-
-- Encourages frequent code commits.
-- Continuous integration: As soon as code is pushed, it is checked for compilation issues, 
-  and unit tests are run, to ensure it works.  May review code and perform quality analysis 
-  like with Sonar, PMD, linters, etc.  Artifacts may be built, like JAR files, executables, etc.
-- Continuous Development: Deploys to a non-production environment.  Ensures that code can be deployed and is safe to deploy. 
-  May run integration tests, load tests, etc.  Sometimes if this is successful, code is automatically merged.
-- Continuous Deployment: Automates deployment to production.  More risky, so many companies don’t allow it,
-  they prefer manual prod deployments.  Usually requires a plan for easy rollback.
-- Jenkins: Java, Groovy based.  Open Source
-- Github workflows

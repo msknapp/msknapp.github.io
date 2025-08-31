@@ -1,15 +1,3 @@
----
-title: 
-weight: 10
-description: 
-summary: 
-lastmod: 2025-08-13
-date: 2025-08-13
-tags: []
-categories: []
-series: []
-keywords: []
----
 
 # File Formats
 
@@ -28,7 +16,7 @@ keywords: []
 - Keys and values should be quoted if they are strings, not if they are integers.
 - The last item in lists should not be followed by a comma.
 
-# Yaml
+## Yaml
 
 - Superset of json that doesn’t need braces, but relies upon indentation to indicate sub-fields instead.  
   Use “:” to separate keys and values, including if the value is a nested object.  Nested objects 
@@ -43,4 +31,4 @@ keywords: []
 - Anchors: Use “&” followed by a name to define an anchor, and use “*” followed by
   that name to re-use it somewhere else in the yaml document.
 
-# Protobuf
+## Protobuf
