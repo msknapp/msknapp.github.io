@@ -45,31 +45,31 @@
 - **Singular:** one
 - **Plural:** multiple
 - **Article:** Comes before a noun, indicates if it is specific or general.
-  - Definite: Specific, "the"
-  - Indefinite: General, "a", or "an"
+    - Definite: Specific, "the"
+    - Indefinite: General, "a", or "an"
 - **subject:** the noun conducting the action.
 - **object:** a noun that is affected by the action.
 
 ## Capitalizing Titles
 
 - Capitalize:
-  - first and last words
-  - nouns, verbs, adjectives, adverbs
-  - most uncommon words
+    - first and last words
+    - nouns, verbs, adjectives, adverbs
+    - most uncommon words
 - Do not capitalize:
-  - articles (a, an, the), unless it's the first word.
-  - conjunctions, if they are short: "and", "or", "but", "yet"
-  - prepositions, if they are short: "at", "by", "to"
+    - articles (a, an, the), unless it's the first word.
+    - conjunctions, if they are short: "and", "or", "but", "yet"
+    - prepositions, if they are short: "at", "by", "to"
 
 ## Mixed Up Words
 
 - Affect/Effect: _usually_ affect (alter) is a verb, effect (result) is a noun.
 - Desert/Dessert: One "s" refers to dry land, two "s"s refers to food.
 - Mrs/Ms:
-  - Mrs: a married woman, pronounced "misses", or "missus".  Considered more respectful or classy.
-    It's spelled "Mrs" because it came from the word "MistResS", which was actually honorable in the past.
-  - Ms: an unmarried woman, pronounced "miss" or "miz".  Also used if their marital status is unknown or not important. 
-    It is acceptable to refer to a married woman as "miss".
+    - Mrs: a married woman, pronounced "misses", or "missus".  Considered more respectful or classy.
+      It's spelled "Mrs" because it came from the word "MistResS", which was actually honorable in the past.
+    - Ms: an unmarried woman, pronounced "miss" or "miz".  Also used if their marital status is unknown or not important. 
+      It is acceptable to refer to a married woman as "miss".
 - Capital/Capitol: Capital refer to money or a city, Capitol is a building.
 - Principle/Principal: principle is an idea, a principal (noun) runs a school, principal (adjective) means important.
 - e.g/i.e: "e.g." means "for example", "i.e." means "that is"
@@ -80,19 +80,19 @@
   Saying you are "laying in bed" is wrong.  "lay" is a transitive verb, meaning to put _something_ down.  "lie" can be a verb, or
   a noun.  "ly" by itself is not a word.
 - types of sayings:
-  - canon: an officially approved rule or law.  More commonly used in religion, especially Catholicism.
-  - saying: An often stated set of words, usually short and memorable.
-  - aphorism: a saying that is short and memorable, and conveys wisdom.  A terse statement of a truth.
-  - idiom: an aphorism whose meaning is not literal.
-  - adage: an aphorism that is well known.
-  - proverb: an adage from folklore.
-  - maxim: an aphorism that tends to come from science or morals/ethics.
-  - motto: a moral maxim that explains a person or group's value, or guiding purpose.
-  - slogan: a motto that is more catchy, brief, like it could be chanted.  Tends to be repeated a lot, and written on 
-    materials a group creates, like their advertisements.  Often not a complete statement.  Like "Black lives matter", 
-    "What's in your wallet", or "think outside the bun".  It's designed to make customers very likely to remember a company or product,
-    in an almost hypnotic way.
-  - epithet: a saying that is also descriptive of something.
+    - canon: an officially approved rule or law.  More commonly used in religion, especially Catholicism.
+    - saying: An often stated set of words, usually short and memorable.
+    - aphorism: a saying that is short and memorable, and conveys wisdom.  A terse statement of a truth.
+    - idiom: an aphorism whose meaning is not literal.
+    - adage: an aphorism that is well known.
+    - proverb: an adage from folklore.
+    - maxim: an aphorism that tends to come from science or morals/ethics.
+    - motto: a moral maxim that explains a person or group's value, or guiding purpose.
+    - slogan: a motto that is more catchy, brief, like it could be chanted.  Tends to be repeated a lot, and written on 
+      materials a group creates, like their advertisements.  Often not a complete statement.  Like "Black lives matter", 
+      "What's in your wallet", or "think outside the bun".  It's designed to make customers very likely to remember a company or product,
+      in an almost hypnotic way.
+    - epithet: a saying that is also descriptive of something.
 
 ## Common mis-spelling
 
@@ -108,5 +108,3 @@
 - Proper use of commas
 - Proper use of semicolons
 - How to more effectively communicate
-
-Making better Presentations.

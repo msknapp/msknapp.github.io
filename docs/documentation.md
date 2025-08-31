@@ -158,3 +158,55 @@ Example table syntax:
 - More broadly used and supported
 - Github pages supports this without needing a custom workflow
 - Based on Ruby
+
+## Accurate Documentation
+
+A common problem is choosing between documentation that is easy to follow, or that is easier to maintain by not 
+duplicating information.  You may need a reader to follow instructions from several different websites or pages.
+Jumping between them can get really confusing to the reader.
+
+You could copy instructions into one page, but that duplicates information, and is prone to be inaccurate over time.
+When the original docs are updated, the copy might be forgotten and remain inaccurate or out of date.
+
+In cases like these, consider:
+
+- moving all external steps to the start or end of the current documentation.
+- prefer to embed only the steps that always need to be repeated.
+- offer a script to run several of the steps together.  Utilize automated tests to be sure the scripts keep working.
+  You want to know when procedures are broken right away, instead of waiting for users to get frustrated and complain.
+- using an automated process to synchronize docs.  For instance, a github workflow can automatically copy documentation
+  in from some other page.  The source code might not truly have it.
+- Consider moving documentation to different locations that are more maintainable.
+
+## More Effective Communication
+
+- Use proper grammar, complete sentences, avoid abbreviations and acronyms.  Declare acronyms if they are used.
+- Avoid overly long and wordy sentences.
+- Avoid ambiguity or vagueness.  If a pronoun, or "it", might refer to more than one thing, this can be confusing to the reader.
+- Avoid having many conjunctions in a single sentence.
+- Paragraphs should have related content in them.  If you have a totally new idea, use a different paragraph.
+- Establish pre-requisite knowledge first.
+- Dive into sub-cases or sub-topics before moving onto next topics, unless they have little relevance.
+- Use diagrams
+- Group related things in lists, sub-lists, or tables.
+- Compare and contrast ideas.  Use pros and cons.
+- Ask the audience a question to keep their attention.
+- Take brief polls or surveys mid-presentation.
+- Bold, highlight, or italicize content that most needs to be memorized.
+- Avoid long paragraphs, uncommon words, or words that can easily confuse or mislead readers.
+- Use examples.
+- Write tutorials.
+
+## Making better Presentations
+
+- Consider adding a theme or background.
+- Use more visual aids, like diagrams.
+- Don't plan to go too fast or too slow.  Going too fast will make it harder for people to follow and comprehend.
+- Plan what you are going to say.  Recite it.
+- Teach in order: establish pre-requisites first.  Don't use information that is taught later.
+- Focus on what is important.
+- Avoid overly opinionated statements, stick to facts.
+- Declare pros/cons to an approach.
+- Use clear and concise language, avoid ambiguity or vagueness.
+- Don't write a lot of text on a slide.  Just include main ideas and plan to talk through them.
+- Avoid live demos.  Use recordings for demonstrations of software, or pictures.
