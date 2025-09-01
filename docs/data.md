@@ -270,6 +270,26 @@ These are further separated into these sub-types:
 - Data is usually loaded by streaming or batch jobs.  Can ingest other common data formats like orc, avro, parquet, csv, json.
 - Can query data that is not in BigQuery, like from Spanner or cloud storage.
 
+## DynamoDB
+
+- Serverless, NoSQL, managed, highly scalable and available.  Zero Downtime maintenance.
+- Supports very large tables.
+- Key/Value or document models.
+- “DeNormalize” data to avoid having joins or round trips.  Doesn’t support join.
+- Strong read consistency, ACID transactions across multiple tables within one region and account.
+- Supports global tables, they can be active in multiple regions.  So if your application fails-over to a different region, 
+  there is no database delay.
+- Can stream changes to data to Kinesis or DynamoDB Streams.
+- Secondary indexes.
+- Tables do not have schemas.  Every record can have different attributes, except for the primary key.
+- Primary keys can have a partition key and optionally a sort key.  If there is no sort key, the partition key must be unique.
+- Attributes can be nested.
+- Tables are partitioned by a partition key, which is the first primary key attribute.
+- The extra attributes in a primary key are sort keys.  Dynamo stores records with the same partition together,
+  in sorted order by the sort keys. 
+- Global Secondary Indexes: different partition key and sort key
+- Local Secondary Indexes: same partition key, different sort key.
+
 ## Cassandra
 
 - nosql, huge data, open source
@@ -284,7 +304,7 @@ These are further separated into these sub-types:
 - "Rings": nodes are connected in a ring
 - Gossip: node tells another.  #2 in background
 - if a node goes down, commands go to the second.
-You can control how many nodes that data gets replicated to.
+  You can control how many nodes that data gets replicated to.
 - you can control sharding of data
 - each node can receive a request, and it becomes the coordinator for that request.
 - Writes are very fast.

@@ -191,6 +191,7 @@ No server or operating system maintenance.
 ### DynamoDB
 
 - Distributed NoSQL document database.
+- See [Dynamo](data#dynamodb)
 
 ### Redshift
 
