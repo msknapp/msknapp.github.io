@@ -168,12 +168,14 @@
 - LimitRange
 - VirtualService
 - Destination
-- Helm
-- ArgoCD
 - Argo Workflows
 - PersistentVolume
 - PersistentVolumeClaim
 - Taints, tolerance
 - HorizontalPodAutoscaler
+
+## Helm
+
+## ArgoCD
 
 ## Istio

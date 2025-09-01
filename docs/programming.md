@@ -169,10 +169,6 @@ Not just for python.  Does ruby, R, and Node as well.
 
 - written in Rust, faster than alternatives.
 
-### Ansible
-
-### Argo Workflows
-
 ## Golang
 
 - Functions

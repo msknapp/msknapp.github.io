@@ -27,10 +27,6 @@ by copying the content to sites all over the world, and users connect to more lo
 - Spark: Python, Java, Scala support, does large batch processing or micro-batch streaming.
 - Airflow: Python job scheduler
 
-# Lambdas or Functions
-
-No server or operating system maintenance.
-
 
 
 # Project management

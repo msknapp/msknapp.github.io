@@ -10,8 +10,8 @@ it can react and make the needed changes.
 ## Terraform:
 
 - Infrastructure as code.
-- Providers: a set of resources and Terraform plugins that enable it to manage certain resources.
-- Workflow: write, plan, apply.  Write defines resources.  Plan compares current state to desired and produces a plan of changes.  
+- **Providers:** a set of resources and Terraform plugins that enable it to manage certain resources.
+- **Workflow:** write, plan, apply.  Write defines resources.  Plan compares current state to desired and produces a plan of changes.  
   It knows if certain steps need to happen before other steps.  Apply does the change.
 - Uses a state file to keep track of the current state of your resources.
 - Order of resources in files does not matter, it discovers relationships and dependencies.

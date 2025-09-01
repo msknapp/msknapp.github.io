@@ -176,12 +176,11 @@ ZProfile is run everytime a bash shell starts.  ZRC is only run for interactive 
 - For loops
 - Single-quote strings are not interpreted, double quotes are.
 - Comparisons, tests
-- Arrays
-- Configuration with set
+- Arrays. _not posix_
 - Bash versions
 - “((...))” evaluates an arithmetic expression.  Exit code is zero if the result is non-zero.
 - “[ ]” is equivalent to running test.  Must use arguments for comparison, not operators.  
-- “[[  ]]” evaluates a condition, you can use operators like “==” or “!=”, “<”, “>”, etc. here.
+- “[[  ]]” evaluates a condition, you can use operators like “==” or “!=”, “<”, “>”, etc. here. _not posix_
 - Use “=~” for regular expression matching.
 - “!” negates an expression, changing its exit code to 1 if it was zero, or zero otherwise.
 - “$?” returns the exit code of the last command.
@@ -193,22 +192,22 @@ ZProfile is run everytime a bash shell starts.  ZRC is only run for interactive 
     - “||”  if previous command fails (returns a non-zero exit code), then run the next one, return its exit code.
 - Parameter expansion:
     - ${var:-default} - is “default” if var is blank
-    - ${parameter:offset:length} - selects a substring, length is optional
+    - ${parameter:offset:length} - selects a substring, length is optional. _not posix_
     - ${#parameter} - the length of parameter’s value.
-    - ${parameter#word} - removes the shortest prefix of parameter matching word.
-    - ${parameter##word} - removes the longest prefix of parameter matching word.
-    - ${parameter%word} - removes the shortest suffix of parameter matching word.
-    - ${parameter%%word} - removes the longest suffix of parameter matching word.
-    - ${parameter/pattern/string} - replaces first occurrence of pattern with the string.
+    - ${parameter#word} - removes the shortest prefix of parameter matching word. _not posix_
+    - ${parameter##word} - removes the longest prefix of parameter matching word. _not posix_
+    - ${parameter%word} - removes the shortest suffix of parameter matching word. _not posix_
+    - ${parameter%%word} - removes the longest suffix of parameter matching word. _not posix_
+    - ${parameter/pattern/string} - replaces first occurrence of pattern with the string. _not posix_
 - Redirection:
     - “>” write standard output to file, overwriting existing content
     - “>>” append standard output to the file, keeping existing content
     - “<” read file to standard input
     - “|” pass standard output of previous command to standard input of next, each command runs in its own subshell.
     - “|&” pass both standard input and error to the next command.
-    - “&>” both standard error and output go to the file.
-    - “<<<” the string after this becomes standard input to the command before.
-    - “2>&1” - send standard error to the same place standard output goes.
+    - “&>” both standard error and output go to the file. _not posix_
+    - “<<<” the string after this becomes standard input to the command before. _not posix_
+    - “2>&1”: send standard error to the same place standard output goes.
 - Named Pipes:
     - Act like the anonymous “|” operation, except they have files on the filesystem.
     - Actually keeps data in memory.
@@ -218,6 +217,42 @@ ZProfile is run everytime a bash shell starts.  ZRC is only run for interactive 
     - Pipes are blocking, if a process writes to a pipe (named or not), 
       the kernel will block that process from completing until the data has been read.
     - Usually named pipes are not necessary, but they could be if there are multiple processes writing to or reading from a single pipe.
+- shell options: Configuration with set
+    - `-x`: debug
+    - `-e`: exit immediately if a command fails, except as part of an "if" or "while" condition.
+    - `-o pipefail`: pipes stop and return the first non-zero exit code encountered.
+    - `-C`: noclobber, don't overwrite files written to by stream re-direction.
+    - `-v`: verbose mode, print all commands running.
+    - `-o posix`: makes commands act by the POSIX standard.
+- Differences in invocation:
+    - `#!/usr/bin/env ...`: says to find the command using the PATH environment variable.
+    - `/bin/bash ...`: chooses a specific installation of bash, can pass parameters or arguments to it.
+    - `/usr/bin/bash ...`: chooses a specific installation of bash, can pass parameters or arguments to it.
+    - `/bin/sh`: bash runs in POSIX mode.  Often links to dash on linux systems.  You should prefer this if script portability
+      is a priority.
+- Checking for posix compliance: use [shellcheck](https://www.shellcheck.net/)
+- Shell Differences:
+    - Bash:
+        - prior to 4:
+        - 4 or later:  supports associative arrays, parameter substitution for case (uppercase, lowercase)
+    - ZShell: Mostly auto-completion.
+    - Almquist Shell (used in Alpine): does not support here strings.  Mostly just posix compliant.
+    - Dash: Debian almquist shell.  POSIX compliant from the start, no need to set it in posix mode.  Faster to run than bash, but doesn't
+      have as many features.  does not support here strings.
+- What is a login shell?
+    - zshenv is run even for anytime a z shell starts.
+    - zprofile is run for login shells.  Profile scripts tend to be used to set environment variables, because env vars will normally be 
+      inherited by any sub-shell that is spawned.
+    - zshrc is run for any interactive shell.  If a shell is both interactive and a login shell, the profile runs first.
+    - non-interactive shells only run .zshevn.  They do not run .zprofile, nor .zshrc.
+    - If you ssh to a machine, you open a login shell.  It is also interactive.
+    - If you run `su -` you open a login shell.  It is also interactive.
+    - If you boot your machine in terminal mode and login, that is a login shell.
+    - If you boot in the (usual) visual mode, there is no login shell.
+    - If you open a new terminal window from the (usual) visual mode, it runs zprofile first, then zshrc
+    - Likewise, opening another tab in a terminal window runs zprofile then zshrc.
+    - Running a sub-shell with `zsh` only runs zshrc.
+
 - Commands:
     - Tr: translate, use “-d” to delete a character.
 
@@ -226,6 +261,29 @@ ZProfile is run everytime a bash shell starts.  ZRC is only run for interactive 
 If you are writing a bash script that may run in a container, then you may want to only use features that are
 defined in POSIX 2 shell standards.  The reason it matters is: if you change the underlying base image, the 
 shell script may stop working because certain features it uses don't exist.
+
+The following features are defined in bash but not posix.  If you want a script to be portable, then you should avoid using these features.
+
+- arrays, both sequential and indexed.
+- `&>` is not defined.  Instead use `> file 2>&1`
+- `[[` is not defined.  Usually the `[` or "test" command are sufficient.
+- `<<<` or "here strings", are not defined.  If you don't mind a sub-shell, use `echo ... | command`, or use a here document to avoid
+  a sub-shell.
+- `~` is not interpreted as the home directory, use `$HOME` instead.
+- process substitution, like `<( )` or `>( )`, is not defined.
+- a lot of advanced parameter expansions in bash are undefined in posix.  Typically they can be replaced with something using
+  `printf`, `echo`, `awk`, or `sed`
+- there is no "function" keyword.
+- you cannot use `==` in tests, use `=` instead.
+- see [this](https://mywiki.wooledge.org/Bashism) for more.
+
+## Cat
+
+## Less
+
+## Env
+
+
 
 ## Awk
 

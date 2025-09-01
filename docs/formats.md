@@ -31,4 +31,37 @@
 - Anchors: Use “&” followed by a name to define an anchor, and use “*” followed by
   that name to re-use it somewhere else in the yaml document.
 
+## Toml
+
+- most lines are like `key = value`
+- values can be strings, numbers, floats, booleans, arrays, or dates.
+- strings can be basic `""`, literal `''`, or multi-line `""" ... """`
+- Use "#" to comment.
+- Use periods to set sub-values.
+- Arrays are declared with square brackets.  Types are not enforced and don't need to be consistent.  The last item can have a 
+  trailing comma.
+- Tables are declared using `[name]` on a line.  Values after that are considered members of that table.
+- Declare an array of tables using `[[name]]` repeatedly, with the same name.  keys and values beneath each become a table that is
+  assigned to one entry in an array.
+
+## XML
+
+- objects declared like `<tag att="value" ...>content</tag>`
+- objects with no body are like `<tag att="value" .../>`
+- less popular today than json.
+
+## CSV
+
+- normally values are separated with commas.
+- header is optional
+- records are separated with new lines.
+- Any value can be quoted with double quotes, but they must be quoted if they contain line breaks, commas, or double quotes.
+- The most confusing edge case occurs when values have double-quotes within them.  You must double them up to get the 
+  right value.  For instance, `Dwayne "the Rock" Johnson` becomes `"Dwayne ""the Rock"" Johnson"`.
+  This means the value `""` becomes `""""""` when written into a CSV file.
+- You cannot simply split text by new lines, nor commas, because they may be quoted.
+
+## Avro
+
+
 ## Protobuf
