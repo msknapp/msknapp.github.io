@@ -2,7 +2,7 @@
 
 - Quality of Service:
     - at least once
-    - at most once: if the subscriber is not listening then the miessage is dropped
+    - at most once: if the subscriber is not listening then the message is dropped
 - Publish-Subscribe:
     - one producer, many subscribers or consumers
     - all active listeners will receive the message.  aka fan-out

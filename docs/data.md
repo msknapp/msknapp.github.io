@@ -4,6 +4,8 @@
 ## Concepts
 
 - Three V's of data: volume, variety, velocity.  High volume and variaty is more suitable to NoSQL.
+- RPO: recovery point objective.  minutes.  max period of time where data loss could occur
+- RTO: recovery time objective.  hours or days.  max time it could take to recover and resume operations from a backup or snapshot.
 
 ### Data Lakes
 
@@ -157,6 +159,38 @@ Prioritizes consistency over availability.
   IO, and connections.  There is no added charge.
 - It enables easier integration with various AWS services: send notifications or alerts with SNS, 
   or copy data into Redshift for analytics or machine learning.
+- notebook:
+    - db instance can run multiple database types
+    - database parameter and option groups to configure them
+    - RDS MySQL: multiple AZ possible, HA, read replicas (scalable)
+    - same for postgres
+    - Aurora: components more service oriented, much faster, fully managed
+        - works using a cluster volume that spans AZs
+        - data is auto-replicated across AZs using the volume
+        - primary instance supports R&W
+        - 15 replicas max, read-only
+    - RDS supports automated backups.
+    - RDS backups are done daily during maintenance windows, can set their retention period
+    - snapshots of entire instance
+    - manual snapshots don't auto-delete
+    - latency can occur during backups.
+    - vertical scaling only.  scaling done manually, short disruption
+    - can recover with transaction logs too, to get up to last five minutes
+    - RDS writes are synchronously replicated across AZs
+    - RDS failover is automatic (CName is updated)
+    - auto-failover takes one to two minutes
+    - standby databases are not read replicas, they are for DR only
+    - for performance use read replicas or elasticcache
+    - read replicas can be in other regions
+    - RDS can only be launched into subnets that explicitly allow it, called db subnet groups
+    - can encrypt at rest and in transit.
+    - the database SGs start out denying all traffic.
+    - you cannot extract one table from a snapshot, the entire snapshot must be restored.
+    - replication to standby is synchronous, while read replicas are asynchronous.
+    - you can manually promote a read replica to master but you could lose data.
+    - with aurora there is no chance of data loss.  read replicas automatically become master in a failover.  there is no need for a hot standby, the replicas take both roles.
+    - conventional rds allows a maximum of five read replicas.  failover means 1-2 minutes of no write capability, and hence the database is offline.
+    - microsoft SQL Server only supports "bring your own license" models, you cannot purchase a license over AWS.
 
 #### Aurora
 
@@ -260,6 +294,125 @@ These are further separated into these sub-types:
 - Deletions are markers that a row was deleted.
 - If you use multiple clusters, they are eventually consistent.
 
+## Redshift
+
+- you can manually add compute notes
+- define your own distribution strategy, and sort keys
+- storage compute: resize ops mean it creates a new cluster and migrates data
+- during resize it is read only
+- existing columns cannot be modified.
+- auto-selects a compression method per column via sampling
+- three distribution styles
+- keys: stores matching values close together to improve join speeds.  keys are from one column
+- even distribution
+- all: each node has a full copy of the table (reference tables)
+- sort keys: improves range predicated query performance
+- sort keys are compound or interleaved
+- use vacuum command after bulk uploads, to reorganize, and reclaim space from deletes.
+- "analyze" updates table stats.
+- WLM: workload management: prioritizes queries for users.
+- uses a four tier key based architecture for encryption.
+
+## HBase
+
+- "hbase shell" starts the shell
+- use single quotes around table names, rows, etc.
+- no databases yet.
+- must have at least one column family (cf).
+- no concept of types, no data aggregation from shell
+- must explicitly create alternative indexes.
+- five primitive commands: get, put, delete, scan, increment
+- CRUD, create and update are both from the put command
+- no shell method to query (mongo does have that)
+- mongo lets you store vaues of any type, HBase and Accuulo force you to convert them to byte arrays
+- constructor arg for put is row key
+- in hbase, rows are not overwritten all together with an update, just what is changed.
+- mongo stores documents, hbase has rows
+- one memstore per column family
+- hbase data is stored in memory in a MemStore, stored in HDFS as an HFile.
+- An HFile has data for only one CF, not multiple
+- when a memstore is flushed it creates a new hfile, does not write to an existing one.
+- put operations go to WAL first, then memstore,
+- WAL is aka HLog.
+- one memstore per cf
+- single wal for an hbase server, shared by all tables
+- each cf also has a block cache, which is a LRU cache of data in the HFiles, so it can avoid doing a disk read.
+- HFiles are indexed by block, they are split up into blocks, a block is the minimum size read.
+- Block is the unit of data read into memory by HBase in one pass.
+- Block is smallest indexed unit of data
+- 64kb is the default block size
+    - increase it for frequent sequential scans,
+    - decrease it for frequent random lookups.
+    - decreasing it means the index will aconsume more disk.
+- to do a read, hbase must check the memstore, block cache, and all hfiles that might have relevant info.
+- writing memstore to hfile is merly called a flush.
+- minor compactions merge multiple hfiles into one, but not all.
+- major compactions merge all hfiles for a region and cf into one hfile.
+- major compactions are the only way to clean up deleted records
+- current time in millis is the default versino number when a record is created.
+- old versions get deleted in major compactions
+- delete column vs. delete columns differ by whether they delete one version or all versions of a cell./
+- "column" by itslef means column qualifier (CQ)
+- table names and cf names are strings
+- row keys and values are byte[] and CQ version numbers are long.
+- can't enforce constraints
+- transactions over multiple rows?
+- edis to a single row are atomic.
+- can put data into some row, embedded, if you want it to be "transactional"
+- timestamp/version is sorted in descending order.
+- hfiles -> line per cell+version
+- `rowkey, cf, cq, version value`
+- funny that it includes cf
+- doesn't include table name
+- data for one row can be in mutiple hfiles
+- hbase admin can be used to manipulate tables from java
+- mongo will auto-generate row keys (_id), hbase will not.
+- you should increase scanner cache size if it can help performance.  The default is 1, meaning it makes 1 rpc call per row of scan, it can be much more efficient if it batches (caching) or pass an int to the "next" function.
+- CheckAndPut -> checks if a cell has a certain value, if it does then execute the given input, return true if it did the put, false otherwise.
+- does not throw an exception if the check fails.
+- this can be used to only set new values, by passing null as the expected value.
+- Notice your check doesn't have to be for the same row as your put.
+- CheckAnd* are atomic operations
+- Root- never splits, .META does
+- ROOT- points to a client to a region in the .META table
+- .META tells the client what region server has the region the client is seeking.
+- the -ROOT- table is found using zookeeper.
+- clients cache the information about -ROOT- and .META.
+- you should disable speculative execution if mapreduce jobs interact with hbase
+- don't run m/r on same cluster as production, hbase should be low latency and m/r will slow it down, and put a burden on it.
+- can disable jobtracker and tasktracker daemons on the hbase cluster if not using m/r
+- you can think of cqs in hbase as being similar to mongo field names.
+- changing a cf means the table must be taken offline
+- one access pattern should map to one cf
+- using short names for cfs, cqs, keys, will improve performance of IO b/c hfiles store them in each line.
+- Tall tables have better performance than wide ones, but sacrifice the ability to atomically update.
+- de-normalizing, having redundant data in a table, means you can skip an extra scan, but now the two tables may mismatch.
+- relational databases encourage normalization, nosql data stores encourage some de-normalization.
+- normalization optimizes for writes, de-normalization optimizes for reads.
+- can adjust block size in a cf to be larger/smaller, usualy with smaller rows, or with frequent random access, you may want to reduce the block size. 
+- increase it to save on RAM.
+- can disable block cache, useful if a cf is only accessesd by sequential scans, is not accessed often, or it's frequently having large sequential scans done.
+- disabling it can save you ram and improve performanne in that situation.
+- can elect to aggressively cache a certain cf, meaning hbase prioritizes keeping it cached.
+- bloom filters are not enabled by default, can be enabled on rows or rowcol,  rowcol will index row+cq values combined.
+- bloom filters provide a negative test for each block, so a scan can quickly determine if it's safe to skip a block.
+- you can set a ttl on a cf, major compactions would use the timestamp (version #) to determine if it can delete a row.  ttl is infinite by default.
+- can enable compression, using a codec, but hbase only compresses the hfile, not memstore, or blockcache.  
+- when the data is sent over the network, it is not compressed.
+- altering a table setting like these usually won't take full effect until a major compaction is performed. 
+- for example, altering a table ot use compression will not immediately update all the table's hfiles, but they will be after the next major compaction.
+- compression is not enabled by default, but usually you do want to enable it.
+- if your data is rarely redundant, and won't get smaller by compression, you could leave this disabled.
+- enabling compression does require more CPU, so if your cluster i already cpu bound you may want to leave this disabled.
+- if you want to save on ram or network IO, you may want to have the client compress data.
+- default # of cell versions is 3, often you only want 1, or unlimited.  canc change per CF
+- MIN_VERSIONS is used in conjunction w/ttl.
+- hbase bulk loading uses a map/reducejob to produce hfiles, and then puts the hfiles directly into hbase/HDFS.  The files generated are called storefiles.  Directly loads the StoreFiles.
+- The WAL is not written to during a bulk load.
+- HFile and StoreFile are synonymous, you generate HBase data files (StoreFiles) using HFileOutputFormat.
+- each region server has its own WAL.  edits/puts go to wal before memstore.
+- ICV: increment column values.
+
 ## Data Warehouse
 
 - Serverless, managed
@@ -289,6 +442,33 @@ These are further separated into these sub-types:
   in sorted order by the sort keys. 
 - Global Secondary Indexes: different partition key and sort key
 - Local Secondary Indexes: same partition key, different sort key.
+- notebook:
+    - configure read/write capacity, auto-scales- always uses SSDs
+    - replicated across AZs (HA)
+    - just need to define table key name
+    - 400 kb max item size
+    - columns don't need to be defined
+    - eventualy consistent by default
+    - supports scalars, sets (string, number, binary), and documents (list, map, nesting).
+    - dynamo builds unordered hash indexes by primary key
+    - primary key must be unique, and consists of partition key, and an optional sort key.  If sort key is included, the 
+      partition key does not need to be unique.
+    - each request can specify a consistency level, but higher numbers consume more read capacity
+    - global secondary indexes: any time, any key, any sort, unlimited
+    - local secondary: same key, different sort, at creation only, one per table.
+    - secondary indexes consume write capacity
+    - update item supports atomic counters.
+    - can batch write 25 items.
+    - query: searches all values in a partition key
+    - scan: searches all of the table
+    - have to page through if over 1MB
+    - 10GB per partition
+    - once partitions split, they never merge
+    - choose a partition key that is written/read uniformly
+    - dynao supports FGAC, down to specific attributes
+    - dynamo db streams: keeps a list of table modifications over past 24 hours, in time order. 
+        - associated with table, can be enabled or disabled.
+        - streams are sharded.
 
 ## Cassandra
 

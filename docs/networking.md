@@ -1,6 +1,26 @@
 
 # Networking
 
+## TCP
+
+- transport control protocol
+- reliable, ordered, stateful, heavyweight
+- PAR: packets acknowledged resend
+- uses a connection
+- used for the majority of internet traffic.
+
+## UDP
+
+- user datagram protocol
+- fast, not guaranteed, stateless, lightweight
+- no connection
+- packets are checked but not resent
+- bad packets are dropped
+- order is not guaranteed
+- used for time sensitive applications
+    - VOIP: voice over IP
+    - gaming
+
 ## HTTP 1 vs. 2
 
 ### HTTP/1.0
@@ -46,6 +66,10 @@
 - Record Types:
   - **A:** basic IP
   - **CName:** like an alias.
+- Once an IP address is resolved, web traffic does not pass through DNS servers any more, it goes straight to that IP.
+- Uses port 53
+- primarily uses UDP to serve requests, but if response data exceeds 512 bytes, or if it is executing a zone transfer, then it uses TCP.
+- DNS servers don't use HTTP.
 
 ## Network Layers
 

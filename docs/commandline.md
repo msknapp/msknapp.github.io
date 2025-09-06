@@ -389,6 +389,7 @@ This gives the process a little time to perform cleanup actions.  K8s follows th
 - sysctl: just manages a bunch of variables for the kernal, use `sysctl -a`
 - launchctl: manages what services and processes are installed and run as daemons.  
     - Some useful sub-commands: list, enable, disable, start, stop, kill, and print
+- ulimit, /etc/security/limits.conf, sets a max number of open files at a time.  Some database applications can easily exceed it.
 
 Next: understanding python search paths, imports, and virtual environments.
 Understanding system daemons, and controlling them on mac/linux.

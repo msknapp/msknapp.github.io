@@ -20,21 +20,21 @@
 
 ## OS Signals
 
-- INTERRUPT: SIGINT 2, sent by ctrl+c.  Processes should stop gracefully, but are not forced to, 
+- **INTERRUPT:** SIGINT 2, sent by ctrl+c.  Processes should stop gracefully, but are not forced to, 
   they can just keep running in a different state.  This code implies it came from the user and not some other process,
   usually it means the application should stop.
 - Send signals to processes using the “kill” command.
-- STOP: 19 SIGSTOP, sent by ctrl+s and/or ctrl+z.  The process still exists but stops performing its function.
-- CONTINUE: 18 SIGCONT, sent by ctrl+q.  After being stopped, this lets it resume performing its function.
+- **STOP:** 19 SIGSTOP, sent by ctrl+s and/or ctrl+z.  The process still exists but stops performing its function.
+- **CONTINUE:** 18 SIGCONT, sent by ctrl+q.  After being stopped, this lets it resume performing its function.
   This is also sent by the fg or bg commands.
 - The trap command lets us control responses to signals.
-- SIGTERM: 15, default sent by kill command.  Requests it to terminate.  Can run cleanup actions.  
+- **SIGTERM:** 15, default sent by kill command.  Requests it to terminate.  Can run cleanup actions.  
   Usually this is sent by controlling processes, not users.  This is the most common signal used to start a graceful shutdown.
-- SIGQUIT: 3 Like sigterm, but requests a core-dump too.  Use this when you also want some information 
+- **SIGQUIT:** 3 Like sigterm, but requests a core-dump too.  Use this when you also want some information 
   for debugging or troubleshooting later.  Can - run cleanup actions.
-- SIGKILL: 9 forcefully terminates a program.  Processes cannot handle these or react to them.  
+- **SIGKILL:** 9 forcefully terminates a program.  Processes cannot handle these or react to them.  
   It is impossible to run cleanup actions.  This is the - only way to stop a frozen or hung process.
-- SIGHUP: indicates that the owning process has been stopped.
+- **SIGHUP:** indicates that the owning process has been stopped.
 
 There are user defined signals, you might be able to use them to make processes behave a certain way or take some action.
 Sometimes if you wrap your application in a bash script, signals may not be forwarded to your application, 
@@ -73,24 +73,27 @@ A better option is to run the server directly from the container’s command, an
 - **Operating System:** uname
 - **Bash version:** `bash --version`
     - You need version 4+ to have full support for arrays.  Mac still ships with version 3.
-    - posix compliance:
+    - posix compliance
 
 ## Mac Shortcuts
 
-- Right click: use two fingers to press down on the scroll pad.
-- Scroll on page: use two fingers to swipe on the scroll pad.
-- Zoom: Use two fingers on the scroll pad, move your fingers apart or together.
+- **Right click:** use two fingers to press down on the scroll pad.
+- **Scroll on page:** use two fingers to swipe on the scroll pad.
+- **Zoom:** Use two fingers on the scroll pad, move your fingers apart or together.
 - Moving files in finder:
     - Select the files, choose to copy them with command+v, or right click and choose copy.
     - Navigate to the folder where you want them placed.  Right click, if you hold down the option button, 
       the move command replaces the paste command, click move here.
-- Swap workspaces: Place three fingers on the scroll pad and swipe left/right.
+- **Swap workspaces:** Place three fingers on the scroll pad and swipe left/right.
 - Switch application windows: command+tab
-- Scroll: use two fingers on the mousepad.
-- Right click: press down with two fingers on the mouse pad.
+- **Scroll:** use two fingers on the mousepad.
+- **Right click:** press down with two fingers on the mouse pad.
 - View hidden files from finder: shift+command+”.”
 
 Removing a quarantine on a file: `xattr -r -d com.apple.quarantine <file>`
+
+- Using Finder:
+    - Navigating to an unusual directory, like your home: command+shift+G, then type it in.
 
 ## Chrome Browser Shortcuts
 
@@ -99,21 +102,21 @@ Jump to tab: command+number.
 
 ## Common Environment Variables
 
-- PATH: where commands are found, colon delimited.
-- HOME: your home directory
+- **PATH:** where commands are found, colon delimited.
+- **HOME:** your home directory
 - HTTP_PROXY, HTTPS_PROXY, similar: a URL that requests get proxied through.  curl and wget both use them.
-- SHELL: absolute path to your shell, e.g. /bin/zsh
-- USER: your user name
-- PWD: the present working directory
-- LANG: your language locale
-- EDITOR: what to use for editing.  git uses it.
-- HOSTNAME: DNS host name.
-- TZ: time zone
-- PS1: the prompt in your terminal, it's a template.  It supports various escape sequences:
+- **SHELL:** absolute path to your shell, e.g. /bin/zsh
+- **USER:** your user name
+- **PWD:** the present working directory
+- **LANG:** your language locale
+- **EDITOR:** what to use for editing.  git uses it.
+- **HOSTNAME:** DNS host name.
+- **TZ:** time zone
+- **PS1:** the prompt in your terminal, it's a template.  It supports various escape sequences:
     - \u=username, \h=short hostname, \H=full hostname, \w=absolute directory, \W=local directory
     - Use \$ for the end of the prompt, it's "$" for a normal user and "#" for root, so you should always use it.
     - default: `%n@%m %1~ %#`
     - the template can call for running commands too, but be sure to use quick running commands with brief output.
     - You can configure its color easily, which might be a good idea for different environments, like red for prod, green for non-prod, etc.
     - For local systems you probably don't need the user, host, time, etc. in the prompt.  For systems people ssh into, you probably should have that.
-- DISPLAY: where to find your display.
+- **DISPLAY:** where to find your display.

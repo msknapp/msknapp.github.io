@@ -1,6 +1,30 @@
 
 # Programming
 
+## Semantic Versioning
+
+- format: `<major>.<minor>.<patch>`
+- must be backwards compatible unless major version has changed.
+- minor version changes imply it may have new features or changed behavior.
+- patch version changes imply it fixed bugs.
+- sometimes a major version of 0 means backwards compatibility is not guaranteed even for minor updates.
+- backwards compatibility generally means the API or interface that other applications use to interact with
+  the software does not:
+    - change the data types accepted.
+    - remove fields that were supported and not declared in alpha/beta status.
+- generally software may change some of its behavior and still consider it backwards compatibility, unless it is likely to 
+  lead to errors in applications that use it.  It's often better for an API to host multiple "endpoint versions" in one API.
+
+## Conventional Commits
+
+- format: `<type>[(scope)]: <message>`
+- types: "feat", "fix", "chore", "ci", "docs", "perf", "test", "build"
+- scope: is a name of a service, application, component, or aspect of the software.  It's optional.
+- if a change is not backwards compatible, add a "!" before the colon, and include `BREAKING CHANGE` in the commit.
+- Some tools rely upon conventional commits to generate summaries, releases, etc.
+    - changelog generation
+    - decisions on whether the major version or minor version needs to be bumped for the next release.
+
 ## Language Classification
 
 - Declarative: states what you want, not how to achieve it.
